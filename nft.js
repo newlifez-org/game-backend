@@ -66,7 +66,17 @@ exports.getToken = async (event, context, callback) => {
         const wallet_address = item.Item.wallet_address;
         // wallet address
         const responseCallBack = {
-            wallet_address: wallet_address
+            wallet_address: wallet_address,
+            list_tokens: [
+                {
+                    token_id: "9233f8a9-8356-4d10-90b9-e760098dbf62",
+                    token_uri: "https://dev.cdn.newlifez.io/metadata/1.json"
+                },
+                {
+                    token_id: "ef8120f4-a25f-4f4a-9e69-38a030ccf47a",
+                    token_uri: "https://dev.cdn.newlifez.io/metadata/1.json"
+                }
+            ]
         }
         return callback(null, response(200, responseCallBack));
     }
