@@ -1,0 +1,103 @@
+service: nlz-auth-srv
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  settings:
+    AWS_COGNITO_USER_POOL_ID: xxxxxxxxxx
+    AWS_COGNITO_CLIENT_ID: xxxxxxxxxx
+    AWS_COGNITO_REGION: ap-southeast-1
+    AWS_COGNITO_IDENTITY_POOL_ID: ap-southeast-1:xxxxxxxxxx
+    USER_TABLE: user
+    TOKEN_USER_TABLE: token_user
+    TOKEN_STORE_TABLE: token_store
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  profile: xxxx
+  region: ${opt:region, 'ap-southeast-1'}
+  environment: ${self:custom.settings}
+  iam:
+    role: arn:aws:iam::xxxxxxx:role/nlz-${self:custom.stage}-lambda-role
+  timeout: 29
+  memorySize: 512
+  versionFunctions: false
+  deploymentBucket:
+      name: ${self:custom.stage}-nlz-lambda-resource
+  apiGateway:
+    restApiId: xxxx
+    restApiRootResourceId: xxxx
+
+functions:
+  signUp:
+    handler: index.signUp
+    tags:
+      Name: owner
+      Owner: akagames-dev-team
+    events:
+      - http:
+          path: /api/auth/signup
+          method: POST
+          cors: true
+  verifyOTP:
+    handler: index.verifyOTP
+    tags:
+      Name: owner
+      Owner: akagames-dev-team
+    events:
+      - http:
+          path: /api/auth/verify-otp
+          method: POST
+          cors: true
+  signIn:
+    handler: index.signIn
+    tags:
+      Name: owner
+      Owner: akagames-dev-team
+    events:
+      - http:
+          path: /api/auth/sign-in
+          method: POST
+          cors: true
+  getInfoUser:
+    handler: index.getInfoUser
+    tags:
+      Name: owner
+      Owner: akagames-dev-team
+    events:
+      - http:
+          path: /api/auth/info
+          method: GET
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId: xeqm91
+  getTokens:
+    handler: nft.getToken
+    tags:
+      Name: owner
+      Owner: akagames-dev-team
+    events:
+      - http:
+          path: /api/user/token
+          method: GET
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId: xeqm91
+  refreshToken:
+    handler: index.refreshToken
+    tags:
+      Name: owner
+      Owner: akagames-dev-team
+    events:
+      - http:
+          path: /api/auth/refresh-token
+          method: POST
+          cors: true
+  autoConfirmUser:
+    handler: index.autoConfirmUser
+    tags:
+      Name: owner
+      Owner: akagames-dev-team

@@ -1,0 +1,1196 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "SignUpLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/nlz-auth-srv-dev-signUp"
+      }
+    },
+    "VerifyOTPLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/nlz-auth-srv-dev-verifyOTP"
+      }
+    },
+    "SignInLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/nlz-auth-srv-dev-signIn"
+      }
+    },
+    "GetInfoUserLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/nlz-auth-srv-dev-getInfoUser"
+      }
+    },
+    "GetTokensLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/nlz-auth-srv-dev-getTokens"
+      }
+    },
+    "RefreshTokenLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/nlz-auth-srv-dev-refreshToken"
+      }
+    },
+    "AutoConfirmUserLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/nlz-auth-srv-dev-autoConfirmUser"
+      }
+    },
+    "SignUpLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "dev-nlz-lambda-resource",
+          "S3Key": "serverless/nlz-auth-srv/dev/1657725686166-2022-07-13T15:21:26.166Z/nlz-auth-srv.zip"
+        },
+        "Handler": "index.signUp",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "nlz-auth-srv-dev-signUp",
+        "MemorySize": 512,
+        "Timeout": 29,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "owner"
+          },
+          {
+            "Key": "Owner",
+            "Value": "akagames-dev-team"
+          }
+        ],
+        "Environment": {
+          "Variables": {
+            "AWS_COGNITO_USER_POOL_ID": "ap-southeast-1_8GkplkXWi",
+            "AWS_COGNITO_CLIENT_ID": "7qelv3ra2muj0hcfi4jho9se7r",
+            "AWS_COGNITO_REGION": "ap-southeast-1",
+            "AWS_COGNITO_IDENTITY_POOL_ID": "ap-southeast-1:f10d1f94-e0ca-4aba-b0b8-8008b7c82d76",
+            "USER_TABLE": "user",
+            "TOKEN_USER_TABLE": "token_user",
+            "TOKEN_STORE_TABLE": "token_store"
+          }
+        },
+        "Role": "arn:aws:iam::932178517781:role/nlz-dev-lambda-role"
+      },
+      "DependsOn": [
+        "SignUpLogGroup"
+      ]
+    },
+    "VerifyOTPLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "dev-nlz-lambda-resource",
+          "S3Key": "serverless/nlz-auth-srv/dev/1657725686166-2022-07-13T15:21:26.166Z/nlz-auth-srv.zip"
+        },
+        "Handler": "index.verifyOTP",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "nlz-auth-srv-dev-verifyOTP",
+        "MemorySize": 512,
+        "Timeout": 29,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "owner"
+          },
+          {
+            "Key": "Owner",
+            "Value": "akagames-dev-team"
+          }
+        ],
+        "Environment": {
+          "Variables": {
+            "AWS_COGNITO_USER_POOL_ID": "ap-southeast-1_8GkplkXWi",
+            "AWS_COGNITO_CLIENT_ID": "7qelv3ra2muj0hcfi4jho9se7r",
+            "AWS_COGNITO_REGION": "ap-southeast-1",
+            "AWS_COGNITO_IDENTITY_POOL_ID": "ap-southeast-1:f10d1f94-e0ca-4aba-b0b8-8008b7c82d76",
+            "USER_TABLE": "user",
+            "TOKEN_USER_TABLE": "token_user",
+            "TOKEN_STORE_TABLE": "token_store"
+          }
+        },
+        "Role": "arn:aws:iam::932178517781:role/nlz-dev-lambda-role"
+      },
+      "DependsOn": [
+        "VerifyOTPLogGroup"
+      ]
+    },
+    "SignInLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "dev-nlz-lambda-resource",
+          "S3Key": "serverless/nlz-auth-srv/dev/1657725686166-2022-07-13T15:21:26.166Z/nlz-auth-srv.zip"
+        },
+        "Handler": "index.signIn",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "nlz-auth-srv-dev-signIn",
+        "MemorySize": 512,
+        "Timeout": 29,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "owner"
+          },
+          {
+            "Key": "Owner",
+            "Value": "akagames-dev-team"
+          }
+        ],
+        "Environment": {
+          "Variables": {
+            "AWS_COGNITO_USER_POOL_ID": "ap-southeast-1_8GkplkXWi",
+            "AWS_COGNITO_CLIENT_ID": "7qelv3ra2muj0hcfi4jho9se7r",
+            "AWS_COGNITO_REGION": "ap-southeast-1",
+            "AWS_COGNITO_IDENTITY_POOL_ID": "ap-southeast-1:f10d1f94-e0ca-4aba-b0b8-8008b7c82d76",
+            "USER_TABLE": "user",
+            "TOKEN_USER_TABLE": "token_user",
+            "TOKEN_STORE_TABLE": "token_store"
+          }
+        },
+        "Role": "arn:aws:iam::932178517781:role/nlz-dev-lambda-role"
+      },
+      "DependsOn": [
+        "SignInLogGroup"
+      ]
+    },
+    "GetInfoUserLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "dev-nlz-lambda-resource",
+          "S3Key": "serverless/nlz-auth-srv/dev/1657725686166-2022-07-13T15:21:26.166Z/nlz-auth-srv.zip"
+        },
+        "Handler": "index.getInfoUser",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "nlz-auth-srv-dev-getInfoUser",
+        "MemorySize": 512,
+        "Timeout": 29,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "owner"
+          },
+          {
+            "Key": "Owner",
+            "Value": "akagames-dev-team"
+          }
+        ],
+        "Environment": {
+          "Variables": {
+            "AWS_COGNITO_USER_POOL_ID": "ap-southeast-1_8GkplkXWi",
+            "AWS_COGNITO_CLIENT_ID": "7qelv3ra2muj0hcfi4jho9se7r",
+            "AWS_COGNITO_REGION": "ap-southeast-1",
+            "AWS_COGNITO_IDENTITY_POOL_ID": "ap-southeast-1:f10d1f94-e0ca-4aba-b0b8-8008b7c82d76",
+            "USER_TABLE": "user",
+            "TOKEN_USER_TABLE": "token_user",
+            "TOKEN_STORE_TABLE": "token_store"
+          }
+        },
+        "Role": "arn:aws:iam::932178517781:role/nlz-dev-lambda-role"
+      },
+      "DependsOn": [
+        "GetInfoUserLogGroup"
+      ]
+    },
+    "GetTokensLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "dev-nlz-lambda-resource",
+          "S3Key": "serverless/nlz-auth-srv/dev/1657725686166-2022-07-13T15:21:26.166Z/nlz-auth-srv.zip"
+        },
+        "Handler": "nft.getToken",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "nlz-auth-srv-dev-getTokens",
+        "MemorySize": 512,
+        "Timeout": 29,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "owner"
+          },
+          {
+            "Key": "Owner",
+            "Value": "akagames-dev-team"
+          }
+        ],
+        "Environment": {
+          "Variables": {
+            "AWS_COGNITO_USER_POOL_ID": "ap-southeast-1_8GkplkXWi",
+            "AWS_COGNITO_CLIENT_ID": "7qelv3ra2muj0hcfi4jho9se7r",
+            "AWS_COGNITO_REGION": "ap-southeast-1",
+            "AWS_COGNITO_IDENTITY_POOL_ID": "ap-southeast-1:f10d1f94-e0ca-4aba-b0b8-8008b7c82d76",
+            "USER_TABLE": "user",
+            "TOKEN_USER_TABLE": "token_user",
+            "TOKEN_STORE_TABLE": "token_store"
+          }
+        },
+        "Role": "arn:aws:iam::932178517781:role/nlz-dev-lambda-role"
+      },
+      "DependsOn": [
+        "GetTokensLogGroup"
+      ]
+    },
+    "RefreshTokenLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "dev-nlz-lambda-resource",
+          "S3Key": "serverless/nlz-auth-srv/dev/1657725686166-2022-07-13T15:21:26.166Z/nlz-auth-srv.zip"
+        },
+        "Handler": "index.refreshToken",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "nlz-auth-srv-dev-refreshToken",
+        "MemorySize": 512,
+        "Timeout": 29,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "owner"
+          },
+          {
+            "Key": "Owner",
+            "Value": "akagames-dev-team"
+          }
+        ],
+        "Environment": {
+          "Variables": {
+            "AWS_COGNITO_USER_POOL_ID": "ap-southeast-1_8GkplkXWi",
+            "AWS_COGNITO_CLIENT_ID": "7qelv3ra2muj0hcfi4jho9se7r",
+            "AWS_COGNITO_REGION": "ap-southeast-1",
+            "AWS_COGNITO_IDENTITY_POOL_ID": "ap-southeast-1:f10d1f94-e0ca-4aba-b0b8-8008b7c82d76",
+            "USER_TABLE": "user",
+            "TOKEN_USER_TABLE": "token_user",
+            "TOKEN_STORE_TABLE": "token_store"
+          }
+        },
+        "Role": "arn:aws:iam::932178517781:role/nlz-dev-lambda-role"
+      },
+      "DependsOn": [
+        "RefreshTokenLogGroup"
+      ]
+    },
+    "AutoConfirmUserLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "dev-nlz-lambda-resource",
+          "S3Key": "serverless/nlz-auth-srv/dev/1657725686166-2022-07-13T15:21:26.166Z/nlz-auth-srv.zip"
+        },
+        "Handler": "index.autoConfirmUser",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "nlz-auth-srv-dev-autoConfirmUser",
+        "MemorySize": 512,
+        "Timeout": 29,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "owner"
+          },
+          {
+            "Key": "Owner",
+            "Value": "akagames-dev-team"
+          }
+        ],
+        "Environment": {
+          "Variables": {
+            "AWS_COGNITO_USER_POOL_ID": "ap-southeast-1_8GkplkXWi",
+            "AWS_COGNITO_CLIENT_ID": "7qelv3ra2muj0hcfi4jho9se7r",
+            "AWS_COGNITO_REGION": "ap-southeast-1",
+            "AWS_COGNITO_IDENTITY_POOL_ID": "ap-southeast-1:f10d1f94-e0ca-4aba-b0b8-8008b7c82d76",
+            "USER_TABLE": "user",
+            "TOKEN_USER_TABLE": "token_user",
+            "TOKEN_STORE_TABLE": "token_store"
+          }
+        },
+        "Role": "arn:aws:iam::932178517781:role/nlz-dev-lambda-role"
+      },
+      "DependsOn": [
+        "AutoConfirmUserLogGroup"
+      ]
+    },
+    "ApiGatewayResourceApi": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": "kieweso7bg",
+        "PathPart": "api",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayResourceApiAuth": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApi"
+        },
+        "PathPart": "auth",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayResourceApiAuthSignup": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiAuth"
+        },
+        "PathPart": "signup",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayResourceApiAuthVerifyDashotp": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiAuth"
+        },
+        "PathPart": "verify-otp",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayResourceApiAuthSignDashin": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiAuth"
+        },
+        "PathPart": "sign-in",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayResourceApiAuthInfo": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiAuth"
+        },
+        "PathPart": "info",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayResourceApiAuthRefreshDashtoken": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiAuth"
+        },
+        "PathPart": "refresh-token",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayResourceApiUser": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApi"
+        },
+        "PathPart": "user",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayResourceApiUserToken": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiUser"
+        },
+        "PathPart": "token",
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayMethodApiAuthSignupOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthSignup"
+        },
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayMethodApiAuthVerifyDashotpOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthVerifyDashotp"
+        },
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayMethodApiAuthSignDashinOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthSignDashin"
+        },
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayMethodApiAuthInfoOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthInfo"
+        },
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayMethodApiUserTokenOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiUserToken"
+        },
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayMethodApiAuthRefreshDashtokenOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthRefreshDashtoken"
+        },
+        "RestApiId": "mg9udbalcb"
+      }
+    },
+    "ApiGatewayMethodApiAuthSignupPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthSignup"
+        },
+        "RestApiId": "mg9udbalcb",
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "SignUpLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "SignUpLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodApiAuthVerifyDashotpPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthVerifyDashotp"
+        },
+        "RestApiId": "mg9udbalcb",
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "VerifyOTPLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "VerifyOTPLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodApiAuthSignDashinPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthSignDashin"
+        },
+        "RestApiId": "mg9udbalcb",
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "SignInLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "SignInLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodApiAuthInfoGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthInfo"
+        },
+        "RestApiId": "mg9udbalcb",
+        "ApiKeyRequired": false,
+        "AuthorizationType": "COGNITO_USER_POOLS",
+        "AuthorizerId": "xeqm91",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "GetInfoUserLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "GetInfoUserLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodApiUserTokenGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiUserToken"
+        },
+        "RestApiId": "mg9udbalcb",
+        "ApiKeyRequired": false,
+        "AuthorizationType": "COGNITO_USER_POOLS",
+        "AuthorizerId": "xeqm91",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "GetTokensLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "GetTokensLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodApiAuthRefreshDashtokenPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiAuthRefreshDashtoken"
+        },
+        "RestApiId": "mg9udbalcb",
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "RefreshTokenLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "RefreshTokenLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayDeployment1657725681389": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": "mg9udbalcb",
+        "StageName": "dev"
+      },
+      "DependsOn": [
+        "ApiGatewayMethodApiAuthSignupOptions",
+        "ApiGatewayMethodApiAuthVerifyDashotpOptions",
+        "ApiGatewayMethodApiAuthSignDashinOptions",
+        "ApiGatewayMethodApiAuthInfoOptions",
+        "ApiGatewayMethodApiUserTokenOptions",
+        "ApiGatewayMethodApiAuthRefreshDashtokenOptions",
+        "ApiGatewayMethodApiAuthSignupPost",
+        "ApiGatewayMethodApiAuthVerifyDashotpPost",
+        "ApiGatewayMethodApiAuthSignDashinPost",
+        "ApiGatewayMethodApiAuthInfoGet",
+        "ApiGatewayMethodApiUserTokenGet",
+        "ApiGatewayMethodApiAuthRefreshDashtokenPost"
+      ]
+    },
+    "SignUpLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "SignUpLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "mg9udbalcb",
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "VerifyOTPLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "VerifyOTPLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "mg9udbalcb",
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "SignInLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "SignInLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "mg9udbalcb",
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "GetInfoUserLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "GetInfoUserLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "mg9udbalcb",
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "GetTokensLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "GetTokensLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "mg9udbalcb",
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "RefreshTokenLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "RefreshTokenLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "mg9udbalcb",
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": "dev-nlz-lambda-resource",
+      "Export": {
+        "Name": "sls-nlz-auth-srv-dev-ServerlessDeploymentBucketName"
+      }
+    },
+    "ServiceEndpoint": {
+      "Description": "URL of the service endpoint",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            "mg9udbalcb",
+            ".execute-api.",
+            {
+              "Ref": "AWS::Region"
+            },
+            ".",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/dev"
+          ]
+        ]
+      },
+      "Export": {
+        "Name": "sls-nlz-auth-srv-dev-ServiceEndpoint"
+      }
+    }
+  }
+}
