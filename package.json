@@ -3,6 +3,7 @@
   "description": "cognito",
   "version": "8.10.0",
   "dependencies": {
+    "@cosmjs/cosmwasm-stargate": "^0.28.11",
     "amazon-cognito-identity-js": "^4.4.0",
     "async": "^3.2.0",
     "aws-sdk": "^2.751.0",

@@ -3,6 +3,7 @@ global.fetch = require('node-fetch')
 const AWS = require("aws-sdk");
 const jwt_decode = require("jwt-decode");
 const db = new AWS.DynamoDB.DocumentClient();
+const { CosmWasmClient } = require('@cosmjs/cosmwasm-stargate');
 
 // Create a response
 function response(statusCode, message) {
@@ -46,6 +47,14 @@ const resultSuccess = {
 const resultError = {
     message: "Error",
 };
+
+let client;
+
+const getAuraWasmClient = async () => {
+    const client = await CosmWasmClient.connect(process.env.RPC_ENDPOINT);
+    return client;
+}
+
 exports.getToken = async (event, context, callback) => {
     const username = getCustomerID(event.headers.Authorization);
     const params = {
@@ -65,18 +74,28 @@ exports.getToken = async (event, context, callback) => {
     } else {
         const wallet_address = item.Item.wallet_address;
         // wallet address
+        if (!client) {
+            client = await getAuraWasmClient();
+        }
+        const tokens = {
+            tokens: {
+                owner: wallet_address
+            }
+        }
+        const result = await client.queryContractSmart(process.env.CONRTACT_ADDRESS, tokens);
+        let data = [];
+        for(let element of result.tokens) {
+            const nftInfo = {
+                nft_info: {
+                    token_id: element
+                }
+            }
+            const nft = await client.queryContractSmart(process.env.CONRTACT_ADDRESS, nftInfo);
+            data.push({token_id: element, token_uri: nft.token_uri});
+        }
         const responseCallBack = {
             wallet_address: wallet_address,
-            list_tokens: [
-                {
-                    token_id: "9233f8a9-8356-4d10-90b9-e760098dbf62",
-                    token_uri: "https://dev.cdn.newlifez.io/metadata/1.json"
-                },
-                {
-                    token_id: "ef8120f4-a25f-4f4a-9e69-38a030ccf47a",
-                    token_uri: "https://dev.cdn.newlifez.io/metadata/1.json"
-                }
-            ]
+            list_tokens: data
         }
         return callback(null, response(200, responseCallBack));
     }

@@ -10,6 +10,8 @@ custom:
     USER_TABLE: user
     TOKEN_USER_TABLE: token_user
     TOKEN_STORE_TABLE: token_store
+    RPC_ENDPOINT: https://rpc.serenity.aura.network:443
+    CONRTACT_ADDRESS: aura1lkydmf9huckvq6e2y0m64lrkp3fungh4c6yc2fvrqwcn7evatd7s8h8qyc
 
 provider:
   name: aws
